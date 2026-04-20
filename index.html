@@ -58,32 +58,35 @@
             from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
         }
-        .btn-nav {
-            transition: all 0.3s ease;
-        }
         #music-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 50;
             background: white;
-            padding: 10px;
+            padding: 12px;
             border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #music-toggle.playing {
+            border-color: #f59e0b;
+            background: #fffbeb;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-0 md:p-8">
 
-    <!-- Audio de fondo -->
-    <audio id="bg-music" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Emotional-Piano.mp3" type="audio/mpeg">
+    <!-- Audio de fondo: Música cinematográfica de piano de confianza (Pixabay) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2022/01/18/audio_d0c6ff1bdd.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="music-toggle" class="hover:scale-110 transition-transform">
-        <svg id="music-icon-on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <svg id="music-icon-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 13.8V5l12-2v10.5"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <div id="music-toggle" class="hover:scale-110 active:scale-95" title="Activar/Pausar música">
+        <svg id="music-icon-on" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <svg id="music-icon-off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 13.8V5l12-2v10.5"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
     </div>
 
     <div id="app" class="max-w-7xl w-full flex flex-col gap-4 md:gap-8">
@@ -106,12 +109,12 @@
 
                 <div class="mt-8 md:mt-12">
                     <div class="flex items-center justify-between pt-6 border-t border-stone-100">
-                        <button id="prev-btn" class="btn-nav flex items-center gap-2 px-3 py-2 text-stone-400 hover:text-stone-900 font-medium disabled:opacity-0 text-sm md:text-base">
+                        <button id="prev-btn" class="flex items-center gap-2 px-3 py-2 text-stone-400 hover:text-stone-900 font-medium disabled:opacity-0 text-sm md:text-base transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                             Anterior
                         </button>
                         <div class="flex gap-2" id="pagination-dots"></div>
-                        <button id="next-btn" class="btn-nav flex items-center gap-2 px-6 md:px-10 py-3 md:py-4 bg-stone-900 text-white rounded-full font-bold hover:bg-amber-900 transition-all shadow-xl hover:shadow-amber-900/20 disabled:opacity-30 text-sm md:text-base">
+                        <button id="next-btn" class="flex items-center gap-2 px-6 md:px-10 py-3 md:py-4 bg-stone-900 text-white rounded-full font-bold hover:bg-amber-900 transition-all shadow-xl hover:shadow-amber-900/20 disabled:opacity-30 text-sm md:text-base">
                             Siguiente
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                         </button>
@@ -182,19 +185,36 @@
         const musicIconOn = document.getElementById('music-icon-on');
         const musicIconOff = document.getElementById('music-icon-off');
 
-        function toggleMusic() {
+        function updateMusicUI() {
             if (audio.paused) {
-                audio.play();
-                musicIconOn.classList.remove('hidden');
-                musicIconOff.classList.add('hidden');
-            } else {
-                audio.pause();
                 musicIconOn.classList.add('hidden');
                 musicIconOff.classList.remove('hidden');
+                musicToggle.classList.remove('playing');
+            } else {
+                musicIconOn.classList.remove('hidden');
+                musicIconOff.classList.add('hidden');
+                musicToggle.classList.add('playing');
             }
         }
 
-        musicToggle.addEventListener('click', toggleMusic);
+        async function tryPlayMusic() {
+            try {
+                await audio.play();
+                musicStarted = true;
+                updateMusicUI();
+            } catch (err) {
+                console.log("Reproducción automática bloqueada, esperando clic.");
+            }
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (audio.paused) {
+                tryPlayMusic();
+            } else {
+                audio.pause();
+                updateMusicUI();
+            }
+        });
 
         function updateDots() {
             dotsContainer.innerHTML = '';
@@ -235,10 +255,11 @@
         });
 
         nextBtn.addEventListener('click', () => {
-            if (!musicStarted) {
-                audio.play().catch(() => {});
-                musicStarted = true;
+            // Cada clic en "Siguiente" intenta activar la música si no ha empezado
+            if (!musicStarted || audio.paused) {
+                tryPlayMusic();
             }
+
             if (currentPage < story.pages.length - 1) {
                 currentPage++;
             } else {
@@ -248,7 +269,14 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
 
-        document.addEventListener('DOMContentLoaded', updatePage);
+        // Intentar cargar el audio al inicio
+        window.addEventListener('load', () => {
+            updatePage();
+            // Algunos navegadores permiten audio si el usuario interactúa con cualquier parte del documento
+            document.body.addEventListener('click', () => {
+                if (!musicStarted) tryPlayMusic();
+            }, { once: true });
+        });
     </script>
 </body>
 </html>
