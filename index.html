@@ -27,8 +27,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #1a1a1a; /* Fondo oscuro para que las fotos resalten */
+            background: #1a1a1a; 
             overflow: hidden;
+            position: relative;
         }
         .illustration-container {
             width: 100%;
@@ -36,13 +37,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .main-img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* CAMBIO CLAVE: Muestra la imagen completa sin recortar */
+            width: auto;
+            height: auto;
+            object-fit: contain; 
             transition: opacity 0.6s ease-in-out;
+            border-radius: 4px;
         }
         .fade-in {
             animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -86,7 +93,7 @@
         </header>
 
         <main class="grid grid-cols-1 lg:grid-cols-12 bg-white md:rounded-[3rem] overflow-hidden page-shadow border border-stone-100 book-container">
-            <div class="lg:col-span-7 illustration-outer border-b lg:border-b-0 lg:border-r border-stone-50 min-h-[400px] md:min-h-[600px]">
+            <div class="lg:col-span-7 illustration-outer border-b lg:border-b-0 lg:border-r border-stone-50 min-h-[450px] md:min-h-[650px]">
                 <div class="illustration-container" id="img-wrapper"></div>
             </div>
 
@@ -114,7 +121,7 @@
         </main>
         
         <footer class="text-center text-stone-400 text-[10px] uppercase tracking-[0.4em] mb-8 mt-4">
-            Feliz primer día de la madre • 2024
+            Feliz primer día de la madre • 2026
         </footer>
     </div>
 
