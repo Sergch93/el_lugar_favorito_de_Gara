@@ -76,16 +76,18 @@
             background: #fffbeb;
             transform: scale(1.1);
         }
-        /* Indicador visual de que el audio está cargando o listo */
-        .audio-ready {
-            box-shadow: 0 0 15px rgba(180, 83, 9, 0.3);
+        #music-toggle.error {
+            border-color: #ef4444;
+            background: #fef2f2;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-0 md:p-8">
 
-    <!-- El elemento audio se maneja ahora por JS para mayor compatibilidad -->
-    <audio id="bg-music" loop preload="auto" crossorigin="anonymous"></audio>
+    <!-- Audio manejado con una URL de alta disponibilidad -->
+    <audio id="bg-music" loop preload="auto" crossorigin="anonymous">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-493.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="music-toggle" class="hover:scale-110 active:scale-95" title="Activar/Pausar música">
         <svg id="music-icon-on" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
@@ -188,9 +190,6 @@
         const musicIconOn = document.getElementById('music-icon-on');
         const musicIconOff = document.getElementById('music-icon-off');
 
-        // Configuración manual del audio para maximizar compatibilidad
-        audio.src = "https://www.chosic.com/wp-content/uploads/2021/05/Starlight-Emotional-Piano-Music.mp3";
-
         function updateMusicUI() {
             if (audio.paused) {
                 musicIconOn.classList.add('hidden');
@@ -200,12 +199,15 @@
                 musicIconOn.classList.remove('hidden');
                 musicIconOff.classList.add('hidden');
                 musicToggle.classList.add('playing');
+                musicToggle.classList.remove('error');
             }
         }
 
         async function tryPlayMusic() {
             try {
-                // Forzamos el play
+                // Forzar carga de nuevo por si acaso
+                if (audio.readyState === 0) audio.load();
+                
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
                     await playPromise;
@@ -213,7 +215,10 @@
                     updateMusicUI();
                 }
             } catch (err) {
-                console.log("El navegador bloqueó el inicio automático. Esperando interacción.");
+                console.error("Error de audio:", err);
+                musicToggle.classList.add('error');
+                // Intentar de nuevo tras un pequeño delay
+                setTimeout(() => musicToggle.classList.remove('error'), 1000);
             }
         }
 
@@ -268,7 +273,7 @@
 
         nextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Activación crítica para Chrome/Safari: intentar sonar en cada click de navegación
+            // Desbloqueo forzoso del contexto de audio
             if (!musicStarted || audio.paused) {
                 tryPlayMusic();
             }
@@ -282,20 +287,17 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
 
-        // Evento para "despertar" el motor de audio en dispositivos móviles/Safari
-        document.addEventListener('touchstart', function() {
+        // Estos eventos son CRÍTICOS para móviles
+        const unlockAudio = () => {
             if (!musicStarted) tryPlayMusic();
-        }, { once: true });
+            document.removeEventListener('touchstart', unlockAudio);
+            document.removeEventListener('mousedown', unlockAudio);
+        };
 
-        document.addEventListener('mousedown', function() {
-            if (!musicStarted) tryPlayMusic();
-        }, { once: true });
+        document.addEventListener('touchstart', unlockAudio, { once: true });
+        document.addEventListener('mousedown', unlockAudio, { once: true });
 
-        window.addEventListener('load', () => {
-            updatePage();
-            // Intento silencioso
-            audio.load();
-        });
+        window.addEventListener('load', updatePage);
     </script>
 </body>
 </html>
