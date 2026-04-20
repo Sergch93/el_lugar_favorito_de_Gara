@@ -70,7 +70,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center p-0 md:p-8">
 
-    <!-- Audio de fondo (Versión instrumental inspirada en Tu Refugio) -->
+    <!-- Audio de fondo (Versión instrumental) -->
     <audio id="bg-music" loop>
         <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Emotional-Piano.mp3" type="audio/mpeg">
     </audio>
@@ -206,6 +206,8 @@
 
         function updatePage() {
             const page = story.pages[currentPage];
+            if(!page) return;
+
             subtitleEl.innerText = page.subtitle;
             chapterTitleEl.innerText = page.chapterTitle;
             contentEl.innerText = page.content;
@@ -217,7 +219,7 @@
             img.src = page.imageUrl;
             
             imgWrapper.appendChild(img);
-            prevBtn.disabled = currentPage === 0;
+            prevBtn.style.visibility = currentPage === 0 ? 'hidden' : 'visible';
             
             if (currentPage === story.pages.length - 1) {
                 nextBtn.innerHTML = '<span>Comenzar de nuevo</span>';
@@ -233,9 +235,7 @@
 
         function handleNavigation() {
             if (!musicStarted) {
-                audio.play().catch(() => {
-                    console.log("Audio esperando interacción");
-                });
+                audio.play().catch(e => console.log("Audio play blocked"));
                 musicStarted = true;
             }
         }
