@@ -66,22 +66,23 @@
             background: white;
             padding: 12px;
             border-radius: 50%;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             border: 2px solid transparent;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #music-toggle.playing {
-            border-color: #f59e0b;
+            border-color: #b45309;
             background: #fffbeb;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-0 md:p-8">
 
-    <!-- Audio de fondo: Música cinematográfica de piano de confianza (Pixabay) -->
+    <!-- Audio de fondo: Música cinematográfica estable -->
     <audio id="bg-music" loop preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/01/18/audio_d0c6ff1bdd.mp3" type="audio/mpeg">
+        <source src="https://www.chosic.com/wp-content/uploads/2021/05/Starlight-Emotional-Piano-Music.mp3" type="audio/mpeg">
     </audio>
 
     <div id="music-toggle" class="hover:scale-110 active:scale-95" title="Activar/Pausar música">
@@ -152,7 +153,7 @@
                 {
                     subtitle: "Capítulo 3",
                     chapterTitle: "El superpoder de mamá",
-                    content: "Pero entre todos los descubrimientos de este primer año, hubo uno que dejó a Sergio sin palabras: los superpoderes de Noemí.\n\nNoemí no lleva capa, pero irradia una ternura que podría calmar el oleaje más bravo. Tiene el don de convertir sus brazos en el refugio más seguro del mundo. A Gara le encanta el mundo, pero le gusta mucho más quedarse dormida ahí, pegadita al corazón de mamá, donde el tiempo parece detenerse y todo está bien.",
+                    content: "Pero entre todos los discoveries de este primer año, hubo uno que dejó a Sergio sin palabras: los superpoderes de Noemí.\n\nNoemí no lleva capa, pero irradia una ternura que podría calmar el oleaje más bravo. Tiene el don de convertir sus brazos en el refugio más seguro del mundo. A Gara le encanta el mundo, pero le gusta mucho más quedarse dormida ahí, pegadita al corazón de mamá, donde el tiempo parece detenerse y todo está bien.",
                     imageUrl: "https://i.ibb.co/9kxQpS44/IMG-3436-1.png"
                 },
                 {
@@ -199,15 +200,19 @@
 
         async function tryPlayMusic() {
             try {
-                await audio.play();
-                musicStarted = true;
-                updateMusicUI();
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    await playPromise;
+                    musicStarted = true;
+                    updateMusicUI();
+                }
             } catch (err) {
-                console.log("Reproducción automática bloqueada, esperando clic.");
+                console.log("Esperando interacción para iniciar audio...");
             }
         }
 
-        musicToggle.addEventListener('click', () => {
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que el clic del body interfiera
             if (audio.paused) {
                 tryPlayMusic();
             } else {
@@ -246,7 +251,8 @@
             updateDots();
         }
 
-        prevBtn.addEventListener('click', () => {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if (currentPage > 0) {
                 currentPage--;
                 updatePage();
@@ -254,11 +260,9 @@
             }
         });
 
-        nextBtn.addEventListener('click', () => {
-            // Cada clic en "Siguiente" intenta activar la música si no ha empezado
-            if (!musicStarted || audio.paused) {
-                tryPlayMusic();
-            }
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!musicStarted) tryPlayMusic();
 
             if (currentPage < story.pages.length - 1) {
                 currentPage++;
@@ -269,14 +273,12 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
 
-        // Intentar cargar el audio al inicio
-        window.addEventListener('load', () => {
-            updatePage();
-            // Algunos navegadores permiten audio si el usuario interactúa con cualquier parte del documento
-            document.body.addEventListener('click', () => {
-                if (!musicStarted) tryPlayMusic();
-            }, { once: true });
-        });
+        // Evento global para desbloquear audio en cualquier parte
+        document.body.addEventListener('click', () => {
+            if (!musicStarted) tryPlayMusic();
+        }, { once: true });
+
+        window.addEventListener('load', updatePage);
     </script>
 </body>
 </html>
