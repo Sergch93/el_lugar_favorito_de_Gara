@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El lugar favorito de Gara - Cuento Interactivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;500;600&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fdfaf7; 
+        }
+        .serif-text {
+            font-family: 'Crimson Pro', serif;
+        }
+        .page-shadow {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        }
+        .book-container {
+            min-height: 85vh;
+        }
+        .illustration-outer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000; 
+            overflow: hidden;
+        }
+        .illustration-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transition: opacity 0.6s ease-in-out;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .btn-nav {
+            transition: all 0.3s ease;
+        }
+        /* Botón de control de sonido */
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-0 md:p-8">
+
+    <!-- Audio de fondo (Versión instrumental inspirada en Tu Refugio) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Emotional-Piano.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle" class="hover:scale-110 transition-transform">
+        <svg id="music-icon-on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <svg id="music-icon-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 13.8V5l12-2v10.5"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+
+    <div id="app" class="max-w-7xl w-full flex flex-col gap-4 md:gap-8">
+        <header class="text-center mt-6 md:mt-0">
+            <h1 id="story-title" class="text-2xl md:text-5xl font-bold text-stone-800 tracking-tight px-4 text-balance">El lugar favorito de Gara</h1>
+            <p id="story-author" class="text-amber-700 font-semibold text-[10px] md:text-xs mt-2 uppercase tracking-[0.2em]">Para Noemí, con todo nuestro amor</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 bg-white md:rounded-[3rem] overflow-hidden page-shadow border border-stone-100 book-container">
+            <!-- Área de la imagen -->
+            <div class="lg:col-span-7 illustration-outer border-b lg:border-b-0 lg:border-r border-stone-50 min-h-[400px] md:min-h-[600px]">
+                <div class="illustration-container" id="img-wrapper"></div>
+            </div>
+
+            <!-- Área del texto -->
+            <div class="lg:col-span-5 flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white">
+                <div id="content-area" class="fade-in">
+                    <h2 id="page-subtitle" class="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-[0.3em] mb-4 md:mb-6"></h2>
+                    <h3 id="page-chapter-title" class="text-2xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-6 md:mb-8 leading-tight"></h3>
+                    <div id="page-content" class="serif-text text-lg md:text-xl lg:text-2xl leading-relaxed text-stone-600 whitespace-pre-wrap"></div>
+                </div>
+
+                <!-- Controles de navegación -->
+                <div class="mt-8 md:mt-12">
+                    <div class="flex items-center justify-between pt-6 border-t border-stone-100">
+                        <button id="prev-btn" class="btn-nav flex items-center gap-2 px-3 py-2 text-stone-400 hover:text-stone-900 font-medium disabled:opacity-0 text-sm md:text-base">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            Anterior
+                        </button>
+                        <div class="flex gap-2" id="pagination-dots"></div>
+                        <button id="next-btn" class="btn-nav flex items-center gap-2 px-6 md:px-10 py-3 md:py-4 bg-stone-900 text-white rounded-full font-bold hover:bg-amber-900 transition-all shadow-xl hover:shadow-amber-900/20 disabled:opacity-30 text-sm md:text-base">
+                            Siguiente
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="text-center text-stone-400 text-[10px] uppercase tracking-[0.4em] mb-8 mt-4">
+            Feliz primer día de la madre • 2024
+        </footer>
+    </div>
+
+    <script>
+        const story = {
+            title: "El lugar favorito de Gara",
+            pages: [
+                {
+                    subtitle: "Portada",
+                    chapterTitle: "Mi Primer Día de la Madre",
+                    content: "El Cuento de Gara y Sergio para Noemí.",
+                    imageUrl: "https://i.ibb.co/rGpb0t06/IMG-3438.png"
+                },
+                {
+                    subtitle: "Capítulo 1",
+                    chapterTitle: "El equipaje lleno de sueños",
+                    content: "Hubo una vez dos corazones valientes, Noemí y Sergio, que decidieron seguir el rastro del sol. Con el acento de Andalucía en la maleta y su profesión como brújula, cruzaron el mar para empezar de nuevo en Tenerife. Dejaron atrás lo conocido, pero llevaban consigo algo mucho más fuerte: la promesa de construir un hogar.\n\nPronto, las paredes de su nueva casa empezaron a llenarse de planes, de ecos y de una dulce espera. La casa era preciosa, pero le faltaba un latido para estar completa.",
+                    imageUrl: "https://i.ibb.co/1J9C7D4v/IMG-3434.jpg" 
+                },
+                {
+                    subtitle: "Capítulo 2",
+                    chapterTitle: "La llegada de la pequeña estrella",
+                    content: "Y entonces, como un amanecer canario que lo ilumina todo, llegó Gara. Su nombre, que suena a leyenda y a naturaleza, trajo consigo una revolución de amor. La casa ya no estaba en silencio; ahora se escuchaba el chapoteo del agua, porque a Gara nada le gusta más que su hora del baño, donde se siente como una sirenita en su propio océano.\n\nPapá Sergio, entre risas y desvelos, aprendió a contar elefantes que se balanceaban en telas de araña, una melodía que se convirtió en el puente hacia los sueños mientras Gara lo escuchaba con atención.",
+                    imageUrl: "https://i.ibb.co/nqtr97bg/IMG-3435-1.jpg"
+                },
+                {
+                    subtitle: "Capítulo 3",
+                    chapterTitle: "El superpoder de mamá",
+                    content: "Pero entre todos los descubrimientos de este primer año, hubo uno que dejó a Sergio sin palabras: los superpoderes de Noemí.\n\nNoemí no lleva capa, pero irradia una ternura que podría calmar el oleaje más bravo. Tiene el don de convertir sus brazos en el refugio más seguro del mundo. A Gara le encanta el mundo, pero le gusta mucho más quedarse dormida ahí, pegadita al corazón de mamá, donde el tiempo parece detenerse y todo está bien.",
+                    imageUrl: "https://i.ibb.co/9kxQpS44/IMG-3436-1.png"
+                },
+                {
+                    subtitle: "Capítulo 4",
+                    chapterTitle: "La imagen del corazón",
+                    content: "Cada mañana, cuando el despertador avisa a Sergio de que es hora de ir al cole, ocurre el momento más mágico de todos. Antes de salir, Sergio se asoma a la habitación y las ve: Noemí y Gara, entrelazadas en un abrazo infinito, durmiendo juntas en la calma del amanecer.\n\nEsa imagen de paz absoluta es la que Sergio guarda en su bolsillo para que lo acompañe durante todo el día. Es el recordatorio de que, aunque el mundo sea muy grande y hayan viajado lejos, la verdadera felicidad es así de sencilla.",
+                    imageUrl: "https://i.ibb.co/35tFSPX5/IMG-3437-1.png"
+                },
+                {
+                    subtitle: "Epílogo",
+                    chapterTitle: "Siempre serás nuestro lugar favorito",
+                    content: "Hoy, en tu primer Día de la Madre, Gara todavía no sabe decirte con palabras cuánto te quiere, pero te lo dice cada vez que busca tu mano o se queda frita en tu pecho.\n\nGracias, Noemí, por ser el faro de esta familia y por llenar de amor cada rincón de nuestra nueva vida.\n\nFeliz primer Día de la Madre. Porque, pase lo que pase, tú siempre serás nuestro lugar favorito.",
+                    imageUrl: "https://i.ibb.co/d02S0FzR/IMG-3432.png"
+                }
+            ]
+        };
+
+        let currentPage = 0;
+        let musicStarted = false;
+
+        const subtitleEl = document.getElementById('page-subtitle');
+        const chapterTitleEl = document.getElementById('page-chapter-title');
+        const contentEl = document.getElementById('page-content');
+        const imgWrapper = document.getElementById('img-wrapper');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const dotsContainer = document.getElementById('pagination-dots');
+        const contentArea = document.getElementById('content-area');
+        const audio = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIconOn = document.getElementById('music-icon-on');
+        const musicIconOff = document.getElementById('music-icon-off');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIconOn.classList.remove('hidden');
+                musicIconOff.classList.add('hidden');
+            } else {
+                audio.pause();
+                musicIconOn.classList.add('hidden');
+                musicIconOff.classList.remove('hidden');
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        function updateDots() {
+            dotsContainer.innerHTML = '';
+            story.pages.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `h-1.5 rounded-full transition-all duration-500 ${i === currentPage ? 'w-8 bg-amber-600' : 'w-2 bg-stone-200'}`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updatePage() {
+            const page = story.pages[currentPage];
+            subtitleEl.innerText = page.subtitle;
+            chapterTitleEl.innerText = page.chapterTitle;
+            contentEl.innerText = page.content;
+            
+            imgWrapper.innerHTML = '';
+            const img = document.createElement('img');
+            img.className = "main-img fade-in";
+            img.alt = "Ilustración de " + page.chapterTitle;
+            img.src = page.imageUrl;
+            
+            imgWrapper.appendChild(img);
+            prevBtn.disabled = currentPage === 0;
+            
+            if (currentPage === story.pages.length - 1) {
+                nextBtn.innerHTML = '<span>Comenzar de nuevo</span>';
+            } else {
+                nextBtn.innerHTML = 'Siguiente <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+            }
+
+            contentArea.classList.remove('fade-in');
+            void contentArea.offsetWidth; 
+            contentArea.classList.add('fade-in');
+            updateDots();
+        }
+
+        function handleNavigation() {
+            if (!musicStarted) {
+                audio.play().catch(() => {
+                    console.log("Audio esperando interacción");
+                });
+                musicStarted = true;
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) { 
+                currentPage--; 
+                updatePage(); 
+                window.scrollTo({top: 0, behavior: 'smooth'}); 
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            handleNavigation();
+            if (currentPage < story.pages.length - 1) {
+                currentPage++;
+            } else {
+                currentPage = 0;
+            }
+            updatePage(); 
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        window.onload = updatePage;
+    </script>
+</body>
+</html>
