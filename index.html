@@ -1,302 +1,265 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d6d6d; -webkit-text-stroke: #6d6d6d}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6b0001; -webkit-text-stroke: #6b0001}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #fb0007; -webkit-text-stroke: #fb0007}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #0000ff; -webkit-text-stroke: #0000ff}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #18702b; -webkit-text-stroke: #18702b}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000; min-height: 16.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #093c94; -webkit-text-stroke: #093c94}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4d5055; -webkit-text-stroke: #4d5055}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #570002; -webkit-text-stroke: #570002; min-height: 16.0px}
-    span.s1 {font-kerning: none; background-color: #ecf1f7}
-    span.s2 {font-kerning: none; color: #fb0007; background-color: #ecf1f7; -webkit-text-stroke: 0px #fb0007}
-    span.s3 {font-kerning: none; color: #2a2a2a; background-color: #ecf1f7; -webkit-text-stroke: 0px #2a2a2a}
-    span.s4 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
-    span.s5 {font-kerning: none; color: #0000ff; background-color: #ecf1f7; -webkit-text-stroke: 0px #0000ff}
-    span.s6 {font-kerning: none; color: #6b0001; background-color: #ecf1f7; -webkit-text-stroke: 0px #6b0001}
-    span.s7 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
-    span.s8 {font-kerning: none; color: #093c94; background-color: #ecf1f7; -webkit-text-stroke: 0px #093c94}
-    span.s9 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
-    span.s10 {font-kerning: none; color: #137646; background-color: #ecf1f7; -webkit-text-stroke: 0px #137646}
-    span.s11 {font-kerning: none}
-    span.s12 {font-kerning: none; color: #a4450b; background-color: #ecf1f7; -webkit-text-stroke: 0px #a4450b}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El lugar favorito de Gara - Cuento Interactivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;500;600&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fdfaf7; 
+        }
+        .serif-text {
+            font-family: 'Crimson Pro', serif;
+        }
+        .page-shadow {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        }
+        .book-container {
+            min-height: 85vh;
+        }
+        .illustration-outer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000; 
+            overflow: hidden;
+        }
+        .illustration-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transition: opacity 0.6s ease-in-out;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .btn-nav {
+            transition: all 0.3s ease;
+        }
+        /* Botón de control de sonido */
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"es"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">El lugar favorito de Gara - Cuento Interactivo</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s7">@import</span><span class="s4"> </span><span class="s8">url</span><span class="s4">(</span><span class="s1">'https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,700;1,400&amp;family=Quicksand:wght@300;500;600&amp;display=swap'</span><span class="s4">);</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s9">'Quicksand'</span><span class="s1">, </span><span class="s8">sans-serif</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s8">#fdfaf7</span><span class="s4">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.serif-text</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s9">'Crimson Pro'</span><span class="s1">, </span><span class="s8">serif</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.page-shadow</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s10">0</span><span class="s1"> </span><span class="s10">25px</span><span class="s1"> </span><span class="s10">50px</span><span class="s1"> </span><span class="s10">-12px</span><span class="s1"> </span><span class="s8">rgba(</span><span class="s10">0</span><span class="s1">, </span><span class="s10">0</span><span class="s1">, </span><span class="s10">0</span><span class="s1">, </span><span class="s10">0.08</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.book-container</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">min-height:</span><span class="s1"> </span><span class="s10">85vh</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.illustration-outer</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s8">flex</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s8">center</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s8">center</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s8">#000</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s8">hidden</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.illustration-container</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s8">flex</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s8">center</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s8">center</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.main-img</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s10">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">object-fit:</span><span class="s1"> </span><span class="s8">cover</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">opacity</span><span class="s4"> </span><span class="s10">0.6s</span><span class="s4"> </span><span class="s1">ease-in-out</span><span class="s4">;</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">image-rendering:</span><span class="s4"> </span><span class="s1">-webkit-optimize-contrast</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.fade-in</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">animation:</span><span class="s1"> </span><span class="s8">fadeIn</span><span class="s1"> </span><span class="s10">0.8s</span><span class="s1"> </span><span class="s8">cubic-bezier(</span><span class="s10">0.4</span><span class="s1">, </span><span class="s10">0</span><span class="s1">, </span><span class="s10">0.2</span><span class="s1">, </span><span class="s10">1</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">@keyframes</span><span class="s1"> </span><span class="s8">fadeIn</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">from</span><span class="s1"> { </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">0</span><span class="s1">; </span><span class="s2">transform:</span><span class="s1"> </span><span class="s8">scale(</span><span class="s10">1.05</span><span class="s8">)</span><span class="s1">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">to</span><span class="s1"> { </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s10">1</span><span class="s1">; </span><span class="s2">transform:</span><span class="s1"> </span><span class="s8">scale(</span><span class="s10">1</span><span class="s8">)</span><span class="s1">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.btn-nav</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s8">all</span><span class="s1"> </span><span class="s10">0.3s</span><span class="s1"> </span><span class="s8">ease</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Botón de control de sonido */</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#music-toggle</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s8">fixed</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">bottom:</span><span class="s1"> </span><span class="s10">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">right:</span><span class="s1"> </span><span class="s10">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s10">50</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s8">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s10">10px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s10">50%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s10">0</span><span class="s1"> </span><span class="s10">4px</span><span class="s1"> </span><span class="s10">6px</span><span class="s1"> </span><span class="s8">rgba(</span><span class="s10">0</span><span class="s1">,</span><span class="s10">0</span><span class="s1">,</span><span class="s10">0</span><span class="s1">,</span><span class="s10">0.1</span><span class="s8">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s8">pointer</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s3">&lt;</span><span class="s6">body</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"min-h-screen flex flex-col items-center p-0 md:p-8"</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Audio de fondo (Versión instrumental inspirada en Tu Refugio) --&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">audio</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"bg-music"</span><span class="s4"> </span><span class="s2">loop</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">source</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Emotional-Piano.mp3"</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"audio/mpeg"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">audio</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"music-toggle"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hover:scale-110 transition-transform"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">svg</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"music-icon-on"</span><span class="s4"> </span><span class="s2">xmlns</span><span class="s3">=</span><span class="s1">"http://www.w3.org/2000/svg"</span><span class="s4"> </span><span class="s2">width</span><span class="s3">=</span><span class="s1">"24"</span><span class="s4"> </span><span class="s2">height</span><span class="s3">=</span><span class="s1">"24"</span><span class="s4"> </span><span class="s2">viewBox</span><span class="s3">=</span><span class="s1">"0 0 24 24"</span><span class="s4"> </span><span class="s2">fill</span><span class="s3">=</span><span class="s1">"none"</span><span class="s4"> </span><span class="s2">stroke</span><span class="s3">=</span><span class="s1">"#b45309"</span><span class="s4"> </span><span class="s2">stroke-width</span><span class="s3">=</span><span class="s1">"2"</span><span class="s4"> </span><span class="s2">stroke-linecap</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s2">stroke-linejoin</span><span class="s3">=</span><span class="s1">"round"</span><span class="s3">&gt;&lt;</span><span class="s6">path</span><span class="s4"> </span><span class="s2">d</span><span class="s3">=</span><span class="s1">"M9 18V5l12-2v13"</span><span class="s3">/&gt;&lt;</span><span class="s6">circle</span><span class="s4"> </span><span class="s2">cx</span><span class="s3">=</span><span class="s1">"6"</span><span class="s4"> </span><span class="s2">cy</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">r</span><span class="s3">=</span><span class="s1">"3"</span><span class="s3">/&gt;&lt;</span><span class="s6">circle</span><span class="s4"> </span><span class="s2">cx</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">cy</span><span class="s3">=</span><span class="s1">"16"</span><span class="s4"> </span><span class="s2">r</span><span class="s3">=</span><span class="s1">"3"</span><span class="s3">/&gt;&lt;/</span><span class="s6">svg</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">svg</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"music-icon-off"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden"</span><span class="s4"> </span><span class="s2">xmlns</span><span class="s3">=</span><span class="s1">"http://www.w3.org/2000/svg"</span><span class="s4"> </span><span class="s2">width</span><span class="s3">=</span><span class="s1">"24"</span><span class="s4"> </span><span class="s2">height</span><span class="s3">=</span><span class="s1">"24"</span><span class="s4"> </span><span class="s2">viewBox</span><span class="s3">=</span><span class="s1">"0 0 24 24"</span><span class="s4"> </span><span class="s2">fill</span><span class="s3">=</span><span class="s1">"none"</span><span class="s4"> </span><span class="s2">stroke</span><span class="s3">=</span><span class="s1">"#a8a29e"</span><span class="s4"> </span><span class="s2">stroke-width</span><span class="s3">=</span><span class="s1">"2"</span><span class="s4"> </span><span class="s2">stroke-linecap</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s2">stroke-linejoin</span><span class="s3">=</span><span class="s1">"round"</span><span class="s3">&gt;&lt;</span><span class="s6">line</span><span class="s4"> </span><span class="s2">x1</span><span class="s3">=</span><span class="s1">"1"</span><span class="s4"> </span><span class="s2">y1</span><span class="s3">=</span><span class="s1">"1"</span><span class="s4"> </span><span class="s2">x2</span><span class="s3">=</span><span class="s1">"23"</span><span class="s4"> </span><span class="s2">y2</span><span class="s3">=</span><span class="s1">"23"</span><span class="s3">/&gt;&lt;</span><span class="s6">path</span><span class="s4"> </span><span class="s2">d</span><span class="s3">=</span><span class="s1">"M9 13.8V5l12-2v10.5"</span><span class="s3">/&gt;&lt;</span><span class="s6">circle</span><span class="s4"> </span><span class="s2">cx</span><span class="s3">=</span><span class="s1">"6"</span><span class="s4"> </span><span class="s2">cy</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">r</span><span class="s3">=</span><span class="s1">"3"</span><span class="s3">/&gt;&lt;</span><span class="s6">circle</span><span class="s4"> </span><span class="s2">cx</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">cy</span><span class="s3">=</span><span class="s1">"16"</span><span class="s4"> </span><span class="s2">r</span><span class="s3">=</span><span class="s1">"3"</span><span class="s3">/&gt;&lt;/</span><span class="s6">svg</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"app"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"max-w-7xl w-full flex flex-col gap-4 md:gap-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">header</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mt-6 md:mt-0"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"story-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-2xl md:text-5xl font-bold text-stone-800 tracking-tight px-4 text-balance"</span><span class="s3">&gt;</span><span class="s4">El lugar favorito de Gara</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"story-author"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-amber-700 font-semibold text-[10px] md:text-xs mt-2 uppercase tracking-[0.2em]"</span><span class="s3">&gt;</span><span class="s4">Para Noemí, con todo nuestro amor</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">header</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">main</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 lg:grid-cols-12 bg-white md:rounded-[3rem] overflow-hidden page-shadow border border-stone-100 book-container"</span><span class="s3">&gt;</span></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Área de la imagen --&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"lg:col-span-7 illustration-outer border-b lg:border-b-0 lg:border-r border-stone-50 min-h-[400px] md:min-h-[600px]"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"illustration-container"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"img-wrapper"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Área del texto --&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"lg:col-span-5 flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"content-area"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fade-in"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"page-subtitle"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-[0.3em] mb-4 md:mb-6"</span><span class="s3">&gt;&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"page-chapter-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-2xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-6 md:mb-8 leading-tight"</span><span class="s3">&gt;&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"page-content"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"serif-text text-lg md:text-xl lg:text-2xl leading-relaxed text-stone-600 whitespace-pre-wrap"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- Controles de navegación --&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-8 md:mt-12"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center justify-between pt-6 border-t border-stone-100"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"prev-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"btn-nav flex items-center gap-2 px-3 py-2 text-stone-400 hover:text-stone-900 font-medium disabled:opacity-0 text-sm md:text-base"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s6">svg</span><span class="s4"> </span><span class="s2">xmlns</span><span class="s3">=</span><span class="s1">"http://www.w3.org/2000/svg"</span><span class="s4"> </span><span class="s2">width</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">height</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">viewBox</span><span class="s3">=</span><span class="s1">"0 0 24 24"</span><span class="s4"> </span><span class="s2">fill</span><span class="s3">=</span><span class="s1">"none"</span><span class="s4"> </span><span class="s2">stroke</span><span class="s3">=</span><span class="s1">"currentColor"</span><span class="s4"> </span><span class="s2">stroke-width</span><span class="s3">=</span><span class="s1">"2"</span><span class="s4"> </span><span class="s2">stroke-linecap</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s2">stroke-linejoin</span><span class="s3">=</span><span class="s1">"round"</span><span class="s3">&gt;&lt;</span><span class="s6">path</span><span class="s4"> </span><span class="s2">d</span><span class="s3">=</span><span class="s1">"m15 18-6-6 6-6"</span><span class="s3">/&gt;&lt;/</span><span class="s6">svg</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>Anterior</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex gap-2"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"pagination-dots"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"next-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"btn-nav flex items-center gap-2 px-6 md:px-10 py-3 md:py-4 bg-stone-900 text-white rounded-full font-bold hover:bg-amber-900 transition-all shadow-xl hover:shadow-amber-900/20 disabled:opacity-30 text-sm md:text-base"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>Siguiente</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s6">svg</span><span class="s4"> </span><span class="s2">xmlns</span><span class="s3">=</span><span class="s1">"http://www.w3.org/2000/svg"</span><span class="s4"> </span><span class="s2">width</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">height</span><span class="s3">=</span><span class="s1">"18"</span><span class="s4"> </span><span class="s2">viewBox</span><span class="s3">=</span><span class="s1">"0 0 24 24"</span><span class="s4"> </span><span class="s2">fill</span><span class="s3">=</span><span class="s1">"none"</span><span class="s4"> </span><span class="s2">stroke</span><span class="s3">=</span><span class="s1">"currentColor"</span><span class="s4"> </span><span class="s2">stroke-width</span><span class="s3">=</span><span class="s1">"2"</span><span class="s4"> </span><span class="s2">stroke-linecap</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s2">stroke-linejoin</span><span class="s3">=</span><span class="s1">"round"</span><span class="s3">&gt;&lt;</span><span class="s6">path</span><span class="s4"> </span><span class="s2">d</span><span class="s3">=</span><span class="s1">"m9 18 6-6-6-6"</span><span class="s3">/&gt;&lt;/</span><span class="s6">svg</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">main</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">footer</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center text-stone-400 text-[10px] uppercase tracking-[0.4em] mb-8 mt-4"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>Feliz primer día de la madre • 2024</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">footer</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> story = {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span>title: </span><span class="s1">"El lugar favorito de Gara"</span><span class="s4">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>pages: [</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Portada"</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s9">"Mi Primer Día de la Madre"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"El Cuento de Gara y Sergio para Noemí.\n\n"</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/rGpb0t06/IMG-3438.png"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Capítulo 1"</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s9">"El equipaje lleno de sueños"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"Hubo una vez dos corazones valientes, Noemí y Sergio, que decidieron seguir el rastro del sol. Con el acento de Andalucía en la maleta y su profesión como brújula, cruzaron el mar para empezar de nuevo en Tenerife.\n\nDejaron atrás lo conocido, pero llevaban consigo algo mucho más fuerte: la promesa de construir un hogar."</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/1J9C7D4v/IMG-3434.jpg"</span><span class="s4"><span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Capítulo 2"</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s9">"La llegada de la pequeña estrella"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"Y entonces, como un amanecer canario que lo ilumina todo, llegó Gara. Su nombre, que suena a leyenda y a naturaleza, trajo consigo una revolución de amor.\n\nLa casa ya no estaba en silencio; ahora se escuchaba el chapoteo del agua, porque a Gara nada le gusta más que su hora del baño, donde se siente como una sirenita en su propio océano."</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/nqtr97bg/IMG-3435-1.jpg"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Capítulo 3"</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s9">"El superpoder de mamá"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"Noemí irradia una ternura que podría calmar el oleaje más bravo. Tiene el don de convertir sus brazos en el refugio más seguro del mundo.\n\nA Gara le encanta el mundo, pero le gusta mucho más quedarse dormida ahí, pegadita al corazón de mamá, donde el tiempo parece detenerse."</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/9kxQpS44/IMG-3436-1.png"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Capítulo 4"</span><span class="s1">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s9">"La imagen del corazón"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"Sergio se asoma a la habitación y las ve: Noemí y Gara, entrelazadas en un abrazo infinito, durmiendo juntas en la calma del amanecer.\n\nEsa imagen de paz absoluta es la que Sergio guarda en su bolsillo para que lo acompañe durante todo el día. Es el recordatorio de que la verdadera felicidad es así de sencilla."</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/35tFSPX5/IMG-3437-1.png"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>{</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>subtitle: </span><span class="s9">"Epílogo"</span><span class="s1">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>chapterTitle: </span><span class="s1">"Siempre serás nuestro lugar favorito"</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>content: </span><span class="s1">"Gracias, Noemí, por ser el faro de esta familia y por llenar de amor cada rincón de nuestra nueva vida.\n\nFeliz primer Día de la Madre. Porque, pase lo que pase, tú siempre serás nuestro lugar favorito."</span><span class="s4">,</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://i.ibb.co/d02S0FzR/IMG-3432.png"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>]</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">let</span><span class="s1"> currentPage = </span><span class="s12">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">let</span><span class="s1"> musicStarted = </span><span class="s7">false</span><span class="s1">;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> subtitleEl = document.getElementById(</span><span class="s9">'page-subtitle'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> chapterTitleEl = document.getElementById(</span><span class="s9">'page-chapter-title'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> contentEl = document.getElementById(</span><span class="s9">'page-content'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> imgWrapper = document.getElementById(</span><span class="s9">'img-wrapper'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> prevBtn = document.getElementById(</span><span class="s9">'prev-btn'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> nextBtn = document.getElementById(</span><span class="s9">'next-btn'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> dotsContainer = document.getElementById(</span><span class="s9">'pagination-dots'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> contentArea = document.getElementById(</span><span class="s9">'content-area'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> audio = document.getElementById(</span><span class="s9">'bg-music'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> musicToggle = document.getElementById(</span><span class="s9">'music-toggle'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> musicIconOn = document.getElementById(</span><span class="s9">'music-icon-on'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> musicIconOff = document.getElementById(</span><span class="s9">'music-icon-off'</span><span class="s1">);</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> toggleMusic() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> (audio.paused) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>audio.play();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>musicIconOn.classList.remove(</span><span class="s9">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>musicIconOff.classList.add(</span><span class="s9">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s7">else</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>audio.pause();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>musicIconOn.classList.add(</span><span class="s9">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>musicIconOff.classList.remove(</span><span class="s9">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>musicToggle.addEventListener(</span><span class="s9">'click'</span><span class="s1">, toggleMusic);</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> updateDots() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>dotsContainer.innerHTML = </span><span class="s9">''</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>story.pages.forEach((_, i) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">const</span><span class="s1"> dot = document.createElement(</span><span class="s9">'div'</span><span class="s1">);</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span>dot.className = </span><span class="s1">`h-1.5 rounded-full transition-all duration-500 </span><span class="s4">${i === currentPage ? </span><span class="s1">'w-8 bg-amber-600'</span><span class="s4"> : </span><span class="s1">'w-2 bg-stone-200'</span><span class="s4">}</span><span class="s1">`</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>dotsContainer.appendChild(dot);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> updatePage() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s1"> page = story.pages[currentPage];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>subtitleEl.innerText = page.subtitle;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>chapterTitleEl.innerText = page.chapterTitle;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>contentEl.innerText = page.content;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>imgWrapper.innerHTML = </span><span class="s9">''</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s1"> img = document.createElement(</span><span class="s9">'img'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>img.className = </span><span class="s9">"main-img fade-in"</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>img.alt = </span><span class="s9">"Ilustración de "</span><span class="s1"> + page.chapterTitle;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>img.src = page.imageUrl;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>imgWrapper.appendChild(img);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>prevBtn.disabled = currentPage === </span><span class="s12">0</span><span class="s1">;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> (currentPage === story.pages.length - </span><span class="s12">1</span><span class="s1">) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>nextBtn.innerHTML = </span><span class="s9">'&lt;span&gt;Comenzar de nuevo&lt;/span&gt;'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s7">else</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span>nextBtn.innerHTML = </span><span class="s1">'Siguiente &lt;svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="m9 18 6-6-6-6"/&gt;&lt;/svg&gt;'</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>contentArea.classList.remove(</span><span class="s9">'fade-in'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">void</span><span class="s1"> contentArea.offsetWidth;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>contentArea.classList.add(</span><span class="s9">'fade-in'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>updateDots();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> handleNavigation() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> (!musicStarted) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>audio.play().</span><span class="s7">catch</span><span class="s1">(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s9">"Audio waiting for interaction"</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>musicStarted = </span><span class="s7">true</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>prevBtn.addEventListener(</span><span class="s9">'click'</span><span class="s1">, () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> (currentPage &gt; </span><span class="s12">0</span><span class="s1">) {<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>currentPage--;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>updatePage();<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>window.scrollTo({top: </span><span class="s12">0</span><span class="s1">, behavior: </span><span class="s9">'smooth'</span><span class="s1">});<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>nextBtn.addEventListener(</span><span class="s9">'click'</span><span class="s1">, () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>handleNavigation();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> (currentPage &lt; story.pages.length - </span><span class="s12">1</span><span class="s1">) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>currentPage++;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s7">else</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>currentPage = </span><span class="s12">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>updatePage();<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>window.scrollTo({top: </span><span class="s12">0</span><span class="s1">, behavior: </span><span class="s9">'smooth'</span><span class="s1">});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>window.onload = updatePage;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
-<p class="p10"><span class="s11"></span><br></p>
+<body class="min-h-screen flex flex-col items-center p-0 md:p-8">
+
+    <!-- Audio de fondo (Versión instrumental inspirada en Tu Refugio) -->
+    <audio id="bg-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/04/And-So-It-Begins-Inspired-By-Emotional-Piano.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle" class="hover:scale-110 transition-transform">
+        <svg id="music-icon-on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <svg id="music-icon-off" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 13.8V5l12-2v10.5"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    </div>
+
+    <div id="app" class="max-w-7xl w-full flex flex-col gap-4 md:gap-8">
+        <header class="text-center mt-6 md:mt-0">
+            <h1 id="story-title" class="text-2xl md:text-5xl font-bold text-stone-800 tracking-tight px-4 text-balance">El lugar favorito de Gara</h1>
+            <p id="story-author" class="text-amber-700 font-semibold text-[10px] md:text-xs mt-2 uppercase tracking-[0.2em]">Para Noemí, con todo nuestro amor</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-12 bg-white md:rounded-[3rem] overflow-hidden page-shadow border border-stone-100 book-container">
+            <!-- Área de la imagen -->
+            <div class="lg:col-span-7 illustration-outer border-b lg:border-b-0 lg:border-r border-stone-50 min-h-[400px] md:min-h-[600px]">
+                <div class="illustration-container" id="img-wrapper"></div>
+            </div>
+
+            <!-- Área del texto -->
+            <div class="lg:col-span-5 flex flex-col justify-between p-8 md:p-12 lg:p-16 bg-white">
+                <div id="content-area" class="fade-in">
+                    <h2 id="page-subtitle" class="text-[10px] md:text-xs font-bold text-amber-600 uppercase tracking-[0.3em] mb-4 md:mb-6"></h2>
+                    <h3 id="page-chapter-title" class="text-2xl md:text-4xl lg:text-5xl font-bold text-stone-800 mb-6 md:mb-8 leading-tight"></h3>
+                    <div id="page-content" class="serif-text text-lg md:text-xl lg:text-2xl leading-relaxed text-stone-600 whitespace-pre-wrap"></div>
+                </div>
+
+                <!-- Controles de navegación -->
+                <div class="mt-8 md:mt-12">
+                    <div class="flex items-center justify-between pt-6 border-t border-stone-100">
+                        <button id="prev-btn" class="btn-nav flex items-center gap-2 px-3 py-2 text-stone-400 hover:text-stone-900 font-medium disabled:opacity-0 text-sm md:text-base">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            Anterior
+                        </button>
+                        <div class="flex gap-2" id="pagination-dots"></div>
+                        <button id="next-btn" class="btn-nav flex items-center gap-2 px-6 md:px-10 py-3 md:py-4 bg-stone-900 text-white rounded-full font-bold hover:bg-amber-900 transition-all shadow-xl hover:shadow-amber-900/20 disabled:opacity-30 text-sm md:text-base">
+                            Siguiente
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="text-center text-stone-400 text-[10px] uppercase tracking-[0.4em] mb-8 mt-4">
+            Feliz primer día de la madre • 2024
+        </footer>
+    </div>
+
+    <script>
+        const story = {
+            title: "El lugar favorito de Gara",
+            pages: [
+                {
+                    subtitle: "Portada",
+                    chapterTitle: "Mi Primer Día de la Madre",
+                    content: "El Cuento de Gara y Sergio para Noemí.\n\nUna historia sobre raíces, viajes y el abrazo que se convirtió en hogar.",
+                    imageUrl: "https://i.ibb.co/rGpb0t06/IMG-3438.png"
+                },
+                {
+                    subtitle: "Capítulo 1",
+                    chapterTitle: "El equipaje lleno de sueños",
+                    content: "Hubo una vez dos corazones valientes, Noemí y Sergio, que decidieron seguir el rastro del sol. Con el acento de Andalucía en la maleta y su profesión como brújula, cruzaron el mar para empezar de nuevo en Tenerife.\n\nDejaron atrás lo conocido, pero llevaban consigo algo mucho más fuerte: la promesa de construir un hogar.",
+                    imageUrl: "https://i.ibb.co/1J9C7D4v/IMG-3434.jpg" 
+                },
+                {
+                    subtitle: "Capítulo 2",
+                    chapterTitle: "La llegada de la pequeña estrella",
+                    content: "Y entonces, como un amanecer canario que lo ilumina todo, llegó Gara. Su nombre, que suena a leyenda y a naturaleza, trajo consigo una revolución de amor.\n\nLa casa ya no estaba en silencio; ahora se escuchaba el chapoteo del agua, porque a Gara nada le gusta más que su hora del baño, donde se siente como una sirenita en su propio océano.",
+                    imageUrl: "https://i.ibb.co/nqtr97bg/IMG-3435-1.jpg"
+                },
+                {
+                    subtitle: "Capítulo 3",
+                    chapterTitle: "El superpoder de mamá",
+                    content: "Noemí irradia una ternura que podría calmar el oleaje más bravo. Tiene el don de convertir sus brazos en el refugio más seguro del mundo.\n\nA Gara le encanta el mundo, pero le gusta mucho más quedarse dormida ahí, pegadita al corazón de mamá, donde el tiempo parece detenerse.",
+                    imageUrl: "https://i.ibb.co/9kxQpS44/IMG-3436-1.png"
+                },
+                {
+                    subtitle: "Capítulo 4",
+                    chapterTitle: "La imagen del corazón",
+                    content: "Sergio se asoma a la habitación y las ve: Noemí y Gara, entrelazadas en un abrazo infinito, durmiendo juntas en la calma del amanecer.\n\nEsa imagen de paz absoluta es la que Sergio guarda en su bolsillo para que lo acompañe durante todo el día. Es el recordatorio de que la verdadera felicidad es así de sencilla.",
+                    imageUrl: "https://i.ibb.co/35tFSPX5/IMG-3437-1.png"
+                },
+                {
+                    subtitle: "Epílogo",
+                    chapterTitle: "Siempre serás nuestro lugar favorito",
+                    content: "Gracias, Noemí, por ser el faro de esta familia y por llenar de amor cada rincón de nuestra nueva vida.\n\nFeliz primer Día de la Madre. Porque, pase lo que pase, tú siempre serás nuestro lugar favorito.",
+                    imageUrl: "https://i.ibb.co/d02S0FzR/IMG-3432.png"
+                }
+            ]
+        };
+
+        let currentPage = 0;
+        let musicStarted = false;
+
+        const subtitleEl = document.getElementById('page-subtitle');
+        const chapterTitleEl = document.getElementById('page-chapter-title');
+        const contentEl = document.getElementById('page-content');
+        const imgWrapper = document.getElementById('img-wrapper');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const dotsContainer = document.getElementById('pagination-dots');
+        const contentArea = document.getElementById('content-area');
+        const audio = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIconOn = document.getElementById('music-icon-on');
+        const musicIconOff = document.getElementById('music-icon-off');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIconOn.classList.remove('hidden');
+                musicIconOff.classList.add('hidden');
+            } else {
+                audio.pause();
+                musicIconOn.classList.add('hidden');
+                musicIconOff.classList.remove('hidden');
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        function updateDots() {
+            dotsContainer.innerHTML = '';
+            story.pages.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = `h-1.5 rounded-full transition-all duration-500 ${i === currentPage ? 'w-8 bg-amber-600' : 'w-2 bg-stone-200'}`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updatePage() {
+            const page = story.pages[currentPage];
+            subtitleEl.innerText = page.subtitle;
+            chapterTitleEl.innerText = page.chapterTitle;
+            contentEl.innerText = page.content;
+            
+            imgWrapper.innerHTML = '';
+            const img = document.createElement('img');
+            img.className = "main-img fade-in";
+            img.alt = "Ilustración de " + page.chapterTitle;
+            img.src = page.imageUrl;
+            
+            imgWrapper.appendChild(img);
+            prevBtn.disabled = currentPage === 0;
+            
+            if (currentPage === story.pages.length - 1) {
+                nextBtn.innerHTML = '<span>Comenzar de nuevo</span>';
+            } else {
+                nextBtn.innerHTML = 'Siguiente <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+            }
+
+            contentArea.classList.remove('fade-in');
+            void contentArea.offsetWidth; 
+            contentArea.classList.add('fade-in');
+            updateDots();
+        }
+
+        function handleNavigation() {
+            if (!musicStarted) {
+                audio.play().catch(() => {
+                    console.log("Audio esperando interacción");
+                });
+                musicStarted = true;
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) { 
+                currentPage--; 
+                updatePage(); 
+                window.scrollTo({top: 0, behavior: 'smooth'}); 
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            handleNavigation();
+            if (currentPage < story.pages.length - 1) {
+                currentPage++;
+            } else {
+                currentPage = 0;
+            }
+            updatePage(); 
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        window.onload = updatePage;
+    </script>
 </body>
 </html>
